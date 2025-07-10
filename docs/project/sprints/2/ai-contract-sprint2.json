@@ -1,0 +1,139 @@
+{
+  "sprintId": 2,
+  "sprintName": "Dashboard Core Functionality",
+  "status": "Pending",
+  "objective": "To implement the primary user interactions within the Dashboard, allowing users to manage their projects.",
+  "relatedPRDs": ["docs/prd/01-dashboard.md"],
+  "scopeBoundaries": {
+    "inScope": [
+      "Project list display component",
+      "Add project functionality",
+      "Delete project functionality",
+      "Client-side state management",
+      "Local storage persistence"
+    ],
+    "outOfScope": [
+      "Project editing/modification",
+      "Server-side persistence",
+      "User authentication",
+      "Project sharing",
+      "Advanced project metadata"
+    ]
+  },
+  "restrictiveInstructions": [
+    "NEVER use inline styling - ALWAYS use CSS files in src/styles/",
+    "MUST use TypeScript for all components",
+    "NEVER use generic names like 'Component' or 'Handler'",
+    "ALWAYS use React hooks (useState, useContext) for state management",
+    "MUST implement proper error boundaries",
+    "NEVER proceed without passing all tests for current task"
+  ],
+  "tasks": [
+    {
+      "taskId": "2.1",
+      "taskName": "Create Project List Component",
+      "description": "Develop a React component (`src/components/ProjectList.tsx`) that displays a list of projects. Each item should show the project title and have a delete button.",
+      "verification": "The component renders a static list of mock projects correctly.",
+      "tests": [
+        "Component renders without TypeScript errors",
+        "Mock projects display correctly",
+        "Delete buttons are present and functional",
+        "Component follows MUI design patterns"
+      ],
+      "prerequisite": null,
+      "status": "Pending"
+    },
+    {
+      "taskId": "2.2",
+      "taskName": "Create 'Add Project' Component",
+      "description": "Develop a React component (`src/components/AddProject.tsx`) with a text input and a button to create a new project.",
+      "verification": "The component renders correctly. The button is initially disabled and enables only when there is text in the input field.",
+      "tests": [
+        "Component renders without errors",
+        "Input field accepts text input",
+        "Button is disabled when input is empty",
+        "Button enables when input has text",
+        "Form validation works correctly"
+      ],
+      "prerequisite": "2.1",
+      "status": "Pending"
+    },
+    {
+      "taskId": "2.3",
+      "taskName": "Implement Client-Side State Management",
+      "description": "Use React's `useState` and `useContext` hooks to create a simple state provider (`src/context/ProjectContext.tsx`) that manages the list of projects (add, delete, list).",
+      "verification": "The state can be updated, and components subscribed to the context re-render accordingly.",
+      "tests": [
+        "Context provider wraps components correctly",
+        "State updates trigger re-renders",
+        "Add project function works",
+        "Delete project function works",
+        "TypeScript interfaces are properly defined"
+      ],
+      "prerequisite": "2.2",
+      "status": "Pending"
+    },
+    {
+      "taskId": "2.4",
+      "taskName": "Integrate Components with State",
+      "description": "Connect the `ProjectList` and `AddProject` components to the `ProjectContext` so that adding and deleting projects updates the UI dynamically.",
+      "verification": "A user can add a project, see it appear in the list, and then delete it, which removes it from the list.",
+      "tests": [
+        "Components consume context correctly",
+        "Adding project updates UI immediately",
+        "Deleting project removes from UI",
+        "No memory leaks or stale state",
+        "Error handling for invalid operations"
+      ],
+      "prerequisite": "2.3",
+      "status": "Pending"
+    },
+    {
+      "taskId": "2.5",
+      "taskName": "Implement Mock Local Storage Persistence",
+      "description": "Modify the `ProjectContext` to read from and write to the browser's `localStorage`. This will make the project list persist between page reloads.",
+      "verification": "After adding a project and reloading the page, the project is still visible in the list.",
+      "tests": [
+        "Data persists after page reload",
+        "localStorage operations handle errors gracefully",
+        "Initial load reads from localStorage",
+        "Data serialization/deserialization works",
+        "Storage quota limits are handled"
+      ],
+      "prerequisite": "2.4",
+      "status": "Pending"
+    }
+  ],
+  "deliverables": [
+    "A dashboard where users can add and delete projects.",
+    "Project data that persists in the browser's local storage.",
+    "An `expectations-sprint2.md` file for sprint verification."
+  ],
+  "completionDefinition": {
+    "referenceDocuments": ["../../projectstructuredefinition.md"],
+    "criteria": [
+      "ALL tasks completed in sequential order (2.1 → 2.2 → 2.3 → 2.4 → 2.5)",
+      "ALL tests pass with 100% success rate",
+      "Components render without errors or warnings",
+      "Project CRUD operations work correctly",
+      "Data persists across browser sessions",
+      "All deliverables are present and functional"
+    ],
+    "verification": "Binary pass/fail - sprint is complete ONLY when all criteria are met"
+  },
+  "errorHandling": {
+    "onFailure": {
+      "action": "STOP execution immediately",
+      "reporting": [
+        "Log exact error message and stack trace",
+        "Report which task failed and at what step",
+        "Provide current state of all components and context",
+        "List completed vs remaining tasks",
+        "Show current localStorage state"
+      ]
+    },
+    "recovery": "Fix the specific error before proceeding to next task",
+    "timeout": "45 minutes per task maximum"
+  },
+  "executionOrder": "SEQUENTIAL - each task MUST complete successfully before starting the next"
+}

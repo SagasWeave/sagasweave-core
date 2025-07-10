@@ -1,0 +1,201 @@
+{
+  "sprintId": 3,
+  "sprintName": "Editor Integration & Basic InkJS",
+  "status": "Pending",
+  "objective": "Integrate ACE Editor and InkJS into the PWA to enable basic editing and previewing of Ink files. Establish basic file handling for loading and saving scripts locally.",
+  "relatedPRDs": ["docs/prd/02-editor.md", "docs/project/SagasWeave-Project-Overview.md"],
+  "scopeBoundaries": {
+    "inScope": [
+      "ACE Editor React component integration",
+      "InkJS library integration for compilation",
+      "Basic file handling (save/load locally)",
+      "Editor and preview UI layout",
+      "Basic AI assistant foundation"
+    ],
+    "outOfScope": [
+      "CDN integration",
+      "Advanced file management",
+      "Cloud storage integration",
+      "Full AI assistant functionality",
+      "Advanced InkJS features",
+      "User authentication for files"
+    ]
+  },
+  "restrictiveInstructions": [
+    "NEVER use inline styling - ALWAYS use CSS files in src/styles/",
+    "MUST use Material-UI (MUI) components and theming system",
+    "MUST create main.css as base for entire UI theme in apps/dashboard/src/styles/",
+    "MUST use TypeScript for all components and modules",
+    "NEVER use generic names like 'Editor' or 'Component'",
+    "ALWAYS use React hooks for state management",
+    "MUST implement proper error boundaries for editor components",
+    "NEVER proceed without passing all tests for current task",
+    "ALWAYS use ACE Editor's React wrapper, NEVER direct DOM manipulation",
+    "MUST handle InkJS compilation errors gracefully with user feedback",
+    "MUST follow monorepo structure with apps/dashboard/ prefix for all files",
+    "MUST ensure full responsive design across desktop, tablet, and mobile"
+  ],
+  "tasks": [
+    {
+      "taskId": "3.1",
+      "taskName": "Install Editor Dependencies",
+      "description": "Install ACE Editor React wrapper, InkJS library, Material-UI components, and related TypeScript definitions.",
+      "command": "bun add react-ace ace-builds inkjs @types/react-ace @mui/material @emotion/react @emotion/styled",
+      "verification": "Check package.json to confirm all editor dependencies including MUI are installed with correct versions.",
+      "tests": [
+        "Verify all dependencies exist in package.json",
+        "Check that bun install completes without errors",
+        "Confirm TypeScript can import all new dependencies without errors",
+        "Validate no version conflicts with existing packages",
+        "Verify MUI components can be imported without errors"
+      ],
+      "prerequisite": null,
+      "status": "Pending"
+    },
+    {
+      "taskId": "3.2",
+      "taskName": "Setup CSS Structure and MUI Theme",
+      "description": "Create main.css base theme file and CSS structure in apps/dashboard/src/styles/ following the project's theming requirements.",
+      "verification": "CSS structure is created with main.css as base theme and MUI theme provider is configured.",
+      "tests": [
+        "main.css file exists in apps/dashboard/src/styles/",
+        "CSS structure follows project conventions",
+        "MUI theme provider is properly configured",
+        "Light and dark theme support is implemented",
+        "CSS files are properly imported in main application",
+        "TypeScript compilation succeeds with CSS imports"
+      ],
+      "prerequisite": "3.1",
+      "status": "Pending"
+    },
+    {
+      "taskId": "3.3",
+      "taskName": "Create ACE Editor Component",
+      "description": "Develop a React component (apps/dashboard/src/components/InkEditor.tsx) that wraps ACE Editor with Ink syntax highlighting and basic configuration, following MUI design patterns.",
+      "verification": "The component renders ACE Editor correctly with Ink syntax highlighting and responds to text changes.",
+      "tests": [
+        "Component renders without TypeScript errors",
+        "ACE Editor loads with correct Ink syntax highlighting",
+        "Text input and changes are handled correctly",
+        "Component follows MUI theming patterns",
+        "Editor is responsive and fits container"
+      ],
+      "prerequisite": "3.2",
+      "status": "Pending"
+    },
+    {
+      "taskId": "3.4",
+      "taskName": "Implement InkJS Integration",
+      "description": "Create a service module (apps/dashboard/src/services/InkCompiler.ts) that uses InkJS to compile and execute Ink scripts, with proper error handling.",
+      "verification": "The service can compile valid Ink scripts and return meaningful error messages for invalid scripts.",
+      "tests": [
+        "Service compiles valid Ink scripts successfully",
+        "Service returns proper error messages for invalid scripts",
+        "TypeScript interfaces are properly defined without errors",
+        "Error handling covers all InkJS exception types",
+        "Service is properly exported and importable"
+      ],
+      "prerequisite": "3.3",
+      "status": "Pending"
+    },
+    {
+      "taskId": "3.5",
+      "taskName": "Create Preview Component",
+      "description": "Develop a React component (apps/dashboard/src/components/InkPreview.tsx) that displays the compiled output from InkJS in a readable format, following MUI design patterns.",
+      "verification": "The component displays Ink story output correctly and handles both success and error states from compilation.",
+      "tests": [
+        "Component renders compiled Ink output correctly without TypeScript errors",
+        "Error states are displayed with helpful messages",
+        "Component updates when new compilation results arrive",
+        "Loading states are handled appropriately",
+        "Component follows MUI design patterns"
+      ],
+      "prerequisite": "3.4",
+      "status": "Pending"
+    },
+    {
+      "taskId": "3.6",
+      "taskName": "Implement Basic File Operations",
+      "description": "Create file handling utilities (apps/dashboard/src/utils/FileOperations.ts) for saving and loading Ink scripts to/from localStorage with proper validation.",
+      "verification": "Users can save their work to localStorage and reload it successfully, with proper error handling for corrupted data.",
+      "tests": [
+        "Save operation stores data correctly in localStorage",
+        "Load operation retrieves and validates data correctly",
+        "Error handling for corrupted or missing data",
+        "File operations integrate with editor component",
+        "TypeScript types are properly defined for file data without errors"
+      ],
+      "prerequisite": "3.5",
+      "status": "Pending"
+    },
+    {
+      "taskId": "3.7",
+      "taskName": "Create Editor Layout Integration",
+      "description": "Integrate the editor and preview components into the main dashboard layout (apps/dashboard/src/components/EditorView.tsx) with proper responsive design and MUI theming.",
+      "verification": "The editor view displays both editor and preview side-by-side on desktop and stacked on mobile, with proper responsive design and state synchronization.",
+      "tests": [
+        "Layout is responsive across different screen sizes",
+        "Editor and preview components communicate correctly",
+        "State synchronization works between components",
+        "Navigation integration with existing dashboard",
+        "Performance is acceptable with real-time compilation and TypeScript compilation"
+      ],
+      "prerequisite": "3.6",
+      "status": "Pending"
+    },
+    {
+      "taskId": "3.8",
+      "taskName": "Add Basic AI Assistant Foundation",
+      "description": "Create placeholder components and basic structure (apps/dashboard/src/components/AIAssistant.tsx) for future AI integration, with basic UI elements following MUI patterns.",
+      "verification": "AI assistant placeholder is visible in the editor view with basic UI elements ready for future functionality.",
+      "tests": [
+        "AI assistant component renders without TypeScript errors",
+        "Basic UI elements are present and styled correctly",
+        "Component is properly integrated into editor layout",
+        "Placeholder functionality works as expected",
+        "Component is prepared for future AI integration"
+      ],
+      "prerequisite": "3.6",
+      "status": "Pending"
+    }
+  ],
+  "deliverables": [
+    "A functional ACE Editor component with Ink syntax highlighting using MUI theming",
+    "InkJS integration for compiling and previewing Ink scripts",
+    "Basic file save/load functionality using localStorage",
+    "Responsive editor layout with preview panel following monorepo structure",
+    "Foundation for AI assistant integration in proper directory structure",
+    "CSS styling structure with main.css base theme",
+    "MUI theme provider configuration with light/dark mode support",
+    "Updated expectations-sprint3.md file for sprint verification"
+  ],
+  "completionDefinition": {
+    "referenceDocuments": ["../../projectstructuredefinition.md"],
+    "criteria": [
+      "ALL tasks completed in sequential order (3.1 → 3.2 → 3.3 → 3.4 → 3.5 → 3.6 → 3.7 → 3.8)",
+      "ALL tests pass with 100% success rate",
+      "Editor components render without errors or warnings",
+      "InkJS compilation works for valid and invalid scripts",
+      "File operations persist data correctly across sessions",
+      "Layout is responsive and functional on all screen sizes",
+      "All deliverables are present and functional"
+    ],
+    "verification": "Binary pass/fail - sprint is complete ONLY when all criteria are met"
+  },
+  "errorHandling": {
+    "onFailure": {
+      "action": "STOP execution immediately",
+      "reporting": [
+        "Log exact error message and stack trace",
+        "Report which task failed and at what step",
+        "Provide current state of all editor components",
+        "List completed vs remaining tasks",
+        "Show current localStorage state and file operations",
+        "Report InkJS compilation status and errors"
+      ]
+    },
+    "recovery": "Fix the specific error before proceeding to next task",
+    "timeout": "60 minutes per task maximum"
+  },
+  "executionOrder": "SEQUENTIAL - each task MUST complete successfully before starting the next"
+}

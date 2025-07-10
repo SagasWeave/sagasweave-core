@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Frontend (Dev)",
+      "type": "npm",
+      "script": "dev:frontend",
+      "problemMatcher": [],
+      "detail": "Runs the frontend development server."
+    },
+    {
+      "label": "Start Backend (Dev)",
+      "type": "npm",
+      "script": "dev:backend",
+      "problemMatcher": [],
+      "detail": "Runs the backend development server."
+    },
+    {
+      "label": "Build Frontend",
+      "type": "npm",
+      "script": "build:frontend",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "detail": "Builds the frontend for production."
+    },
+    {
+      "label": "Build Backend",
+      "type": "npm",
+      "script": "build:backend",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Builds the backend for production."
+    }
+  ]
+}

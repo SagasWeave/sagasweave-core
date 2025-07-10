@@ -1,0 +1,4 @@
+
+> @sagasweave/mcp-npm-test-server@0.1.0 start:daemon
+> node dist/sw-shared-util-daemon.js
+

@@ -1,0 +1,74 @@
+# Comby configuration for SagasWeave naming conventions
+# Based on sw-naming-book.json
+
+[variable-naming]
+match = "const :[name] = :[value]"
+rewrite = "const sw:[scope]:[functionality]:[name] = :[value]"
+rule = "where :[name] != /^sw[A-Z]/"
+language = "typescript"
+
+[function-naming]
+match = "function :[name](:[params]) { :[body] }"
+rewrite = "function sw:[scope]:[functionality]:[name](:[params]) { :[body] }"
+rule = "where :[name] != /^sw[A-Z]/"
+language = "typescript"
+
+[arrow-function-naming]
+match = "const :[name] = (:[params]) => { :[body] }"
+rewrite = "const sw:[scope]:[functionality]:[name] = (:[params]) => { :[body] }"
+rule = "where :[name] != /^sw[A-Z]/ && :[name] != /^[A-Z]/"
+language = "typescript"
+
+[class-naming]
+match = "class :[name] { :[body] }"
+rewrite = "class Sw:[scope]:[functionality]:[name] { :[body] }"
+rule = "where :[name] != /^Sw[A-Z]/"
+language = "typescript"
+
+[react-component-naming]
+match = "const :[name] = () => { :[body] }"
+rewrite = "const SwMFeUi:[name] = () => { :[body] }"
+rule = "where :[name] =~ /^[A-Z]/ && :[name] != /^Sw[A-Z]/"
+language = "tsx"
+
+[react-component-with-props]
+match = "const :[name] = (:[props]) => { :[body] }"
+rewrite = "const SwMFeUi:[name] = (:[props]) => { :[body] }"
+rule = "where :[name] =~ /^[A-Z]/ && :[name] != /^Sw[A-Z]/"
+language = "tsx"
+
+[interface-naming]
+match = "interface :[name] { :[body] }"
+rewrite = "interface SwSharedTypes:[name] { :[body] }"
+rule = "where :[name] != /^Sw[A-Z]/"
+language = "typescript"
+
+[type-alias-naming]
+match = "type :[name] = :[type]"
+rewrite = "type SwSharedTypes:[name] = :[type]"
+rule = "where :[name] != /^Sw[A-Z]/"
+language = "typescript"
+
+[import-path-fix]
+match = "import :[imports] from ':[path]'"
+rewrite = "import :[imports] from 'sw-:[scope]-:[functionality]-:[path]'"
+rule = "where :[path] != /^sw-/"
+language = "typescript"
+
+[require-path-fix]
+match = "const :[name] = require(':[path]')"
+rewrite = "const :[name] = require('sw-:[scope]-:[functionality]-:[path]')"
+rule = "where :[path] != /^sw-/"
+language = "typescript"
+
+[css-class-naming]
+match = "className=':[class]'"
+rewrite = "className='sw-:[scope]-:[functionality]-:[class]'"
+rule = "where :[class] != /^sw-/"
+language = "tsx"
+
+[css-class-naming-template]
+match = "className={`:[class]`}"
+rewrite = "className={`sw-:[scope]-:[functionality]-:[class]`}"
+rule = "where :[class] != /^sw-/"
+language = "tsx"

@@ -1,0 +1,135 @@
+# AST-grep configuration for SagasWeave naming conventions
+# Based on sw-naming-book.json
+
+rules:
+  - id: fix-variable-naming
+    message: Variable should follow sw<Scope><Functionality><Name> convention
+    language: typescript
+    rule:
+      pattern: |
+        const $NAME = $VALUE
+    fix: |
+      const sw$SCOPE$FUNCTIONALITY$NAME = $VALUE
+    constraints:
+      NAME:
+        not:
+          regex: '^sw[A-Z]'
+
+  - id: fix-function-naming
+    message: Function should follow sw<Scope><Functionality><Name> convention
+    language: typescript
+    rule:
+      pattern: |
+        function $NAME($PARAMS) {
+          $$$BODY
+        }
+    fix: |
+      function sw$SCOPE$FUNCTIONALITY$NAME($PARAMS) {
+        $$$BODY
+      }
+    constraints:
+      NAME:
+        not:
+          regex: '^sw[A-Z]'
+
+  - id: fix-arrow-function-naming
+    message: Arrow function should follow sw<Scope><Functionality><Name> convention
+    language: typescript
+    rule:
+      pattern: |
+        const $NAME = ($PARAMS) => {
+          $$$BODY
+        }
+    fix: |
+      const sw$SCOPE$FUNCTIONALITY$NAME = ($PARAMS) => {
+        $$$BODY
+      }
+    constraints:
+      NAME:
+        not:
+          any:
+            - regex: '^sw[A-Z]'
+            - regex: '^[A-Z]' # Skip React components
+
+  - id: fix-class-naming
+    message: Class should follow Sw<Scope><Functionality><Name> convention
+    language: typescript
+    rule:
+      pattern: |
+        class $NAME {
+          $$$BODY
+        }
+    fix: |
+      class Sw$SCOPE$FUNCTIONALITY$NAME {
+        $$$BODY
+      }
+    constraints:
+      NAME:
+        not:
+          regex: '^Sw[A-Z]'
+
+  - id: fix-react-component-naming
+    message: React component should follow Sw<Scope><Functionality><Name> convention
+    language: tsx
+    rule:
+      pattern: |
+        const $NAME = () => {
+          $$$BODY
+        }
+    fix: |
+      const SwMFeUi$NAME = () => {
+        $$$BODY
+      }
+    constraints:
+      NAME:
+        regex: '^[A-Z]' # Only match PascalCase (components)
+        not:
+          regex: '^Sw[A-Z]'
+
+  - id: fix-react-component-with-props
+    message: React component with props should follow Sw<Scope><Functionality><Name> convention
+    language: tsx
+    rule:
+      pattern: |
+        const $NAME = ($PROPS) => {
+          $$$BODY
+        }
+    fix: |
+      const SwMFeUi$NAME = ($PROPS) => {
+        $$$BODY
+      }
+    constraints:
+      NAME:
+        regex: '^[A-Z]' # Only match PascalCase (components)
+        not:
+          regex: '^Sw[A-Z]'
+
+  - id: fix-interface-naming
+    message: Interface should follow Sw<Scope><Functionality><Name> convention
+    language: typescript
+    rule:
+      pattern: |
+        interface $NAME {
+          $$$BODY
+        }
+    fix: |
+      interface SwSharedTypes$NAME {
+        $$$BODY
+      }
+    constraints:
+      NAME:
+        not:
+          regex: '^Sw[A-Z]'
+
+  - id: fix-type-alias-naming
+    message: Type alias should follow Sw<Scope><Functionality><Name> convention
+    language: typescript
+    rule:
+      pattern: |
+        type $NAME = $TYPE
+    fix: |
+      type SwSharedTypes$NAME = $TYPE
+    constraints:
+      NAME:
+        not:
+          regex: '^Sw[A-Z]'

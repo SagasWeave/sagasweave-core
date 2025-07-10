@@ -1,0 +1,326 @@
+{
+  "projectPrefix": "sw",
+  "description": "SagasWeave Naming Convention Guide. This guide ensures consistency across the project for variables, functions, classes, and files, compatible with Node.js and React.",
+  "delimiters": {
+    "module": "_",
+    "component": "-",
+    "state": "__"
+  },
+  "scopes": {
+    "file": "File operations",
+    "module_ace": "Ace Editor module",
+    "module_ink": "Ink module",
+    "module_frontend": "Frontend module",
+    "module_backend": "Backend module",
+    "shared": "Shared utilities"
+  },
+  "functionalities": {
+    "api": "API client or server-side logic",
+    "ui": "User interface components (e.g., buttons, panels)",
+    "util": "Utility functions",
+    "service": "Business logic services",
+    "hook": "React hooks",
+    "store": "State management (e.g. Zustand, Redux)",
+    "file": "File-specific operations",
+    "db": "Database-related logic (e.g., SQLite/WASM)",
+    "config": "Configuration files or setup scripts",
+    "test": "Testing utilities, mocks, or setup",
+    "debug": "Debugging-specific code, temporary utilities",
+    "mock": "Mock data or placeholder components"
+  },
+  "rules": {
+    "variables": {
+      "convention": "camelCase",
+      "example": "swModuleFrontendUtilFormatDate",
+      "pattern": "sw<Scope><Functionality><Name>"
+    },
+    "functions": {
+      "convention": "camelCase",
+      "example": "swModuleFrontendApiServiceFetchData",
+      "pattern": "sw<Scope><Functionality><Name>"
+    },
+    "classes": {
+      "convention": "PascalCase",
+      "example": "SwSharedFileHandler",
+      "pattern": "Sw<Scope><Functionality><Name>"
+    },
+    "react_components": {
+      "convention": "PascalCase",
+      "example": "SwModuleFrontendUiDashboardPanel",
+      "pattern": "Sw<Scope><Functionality><Name>"
+    },
+    "files": {
+      "convention": "kebab-case",
+      "example": "sw-shared-file-save-to-disk.ts",
+      "pattern": "sw-(${scopes})-(${functionalities})-[a-z0-9-]+\\.(js|jsx|ts|tsx|css|html|json|png|svg|ico|md|txt)",
+      "notes": "The pattern is a template. The script should dynamically insert keys from 'scopes' and 'functionalities'."
+    },
+    "css_classes": {
+      "convention": "kebab-case",
+      "example": ".sw-dashboard-panel-title",
+      "pattern": ".sw-<component>-<element>"
+    }
+  },
+  "exceptions": {
+    "description": "Files and patterns that are exempt from naming conventions",
+    "files": [
+      "package.json",
+      "package-lock.json",
+      "tsconfig.json",
+      "tsconfig.base.json",
+      "vite.config.ts",
+      "vitest.config.ts",
+      "jest.config.js",
+      "webpack.config.js",
+      "biome.json",
+      ".gitignore",
+      ".comby.toml",
+      ".ast-grep.yml",
+      "README.md",
+      "LICENSE",
+      "Dockerfile",
+      "docker-compose.yml",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "index.html",
+      "index.ts",
+      "index.tsx",
+      "index.js",
+      "index.jsx",
+      "manifest.json"
+    ],
+    "patterns": [
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      "coverage/**",
+      ".git/**",
+      ".vscode/**",
+      ".idea/**",
+      "scripts/**",
+      "tests/**",
+      "**/tests/**",
+      "/tests/**",
+      "apps/*/tests/**",
+      "apps/*/tests/**/*",
+      "apps/*/tests/**/**",
+      "apps/*/tests/**/**/*",
+      "apps/*/tests/**/**/**",
+      "packages/*/tests/**",
+      "packages/*/tests/**/*",
+      "packages/*/tests/**/**",
+      "packages/*/tests/**/**/*",
+      "packages/*/tests/**/**/**",
+      "*.backup",
+      "*.log",
+      "*.pid",
+      "*.map",
+      "**/*.d.ts",
+      "**/*.example.json",
+      "**/test/**/*.test.ts",
+      "**/test/**/*.test.tsx",
+      "**/test/**/*.test.js",
+      "**/test/**/*.test.jsx",
+      "**/tests/**/*.test.ts",
+      "**/tests/**/*.test.tsx",
+      "**/tests/**/*.test.js",
+      "**/tests/**/*.test.jsx"
+    ],
+    "notes": [
+      "Standard configuration files should keep their conventional names",
+      "Build artifacts and dependencies are excluded from validation",
+      "Backup files created during refactoring are temporary and excluded",
+      "Test files are ONLY exempt when located in /test/ or /tests/ directories",
+      "Test files outside of test directories WILL FAIL validation to enforce proper project structure",
+      "This ensures all test files are properly organized in designated test directories"
+    ]
+  },
+  "notes": [
+    "This structure ensures that names are descriptive and predictable.",
+    "The validation script (`scripts/validate-naming.js`) must be updated to dynamically build regex from `scopes` and `functionalities`.",
+    "Code used across multiple modules should be placed in a 'shared' scope. The validation script identifies such cases to encourage refactoring into shared packages."
+  ],
+  "dependency_rules": {
+    "description": "Rules for managing dependencies and shared code to maintain clean architecture",
+    "rules": [
+      {
+        "id": "cross_module_dependency",
+        "description": "If a module file/function uses a dependency from another module, the functionality should be moved to shared-types",
+        "enforcement": "automatic",
+        "action": "move_to_shared"
+      },
+      {
+        "id": "duplicate_functionality",
+        "description": "If a functionality exists in more than one file, it should be moved to shared-types",
+        "enforcement": "automatic",
+        "action": "move_to_shared"
+      }
+    ],
+    "shared_types_scope": "shared",
+    "target_directory": "packages/shared-types/src",
+    "notes": [
+      "The idea is that most code should be in shared-types as generic modules so module scripts are specific",
+      "This ensures better code reusability and prevents duplication across modules",
+      "Automatic refactoring tools should detect violations and suggest/perform moves to shared-types"
+    ]
+  },
+  "tooling": {
+    "comby": {
+      "description": "Structural search and replace patterns for Comby CLI tool",
+      "patterns": {
+        "fix_variable_prefix": {
+          "match": ":[oldName]",
+          "rewrite": "sw:[scope]:[functionality]:[name]",
+          "description": "Fix variable naming to follow sw<Scope><Functionality><Name> pattern"
+        },
+        "fix_import_paths": {
+          "match": "import { :[imports] } from \":[path]/:[oldFile]\"",
+          "rewrite": "import { :[imports] } from \":[path]/sw-:[scope]-:[functionality]-:[newFile]\"",
+          "description": "Update import paths after file renaming with module scope"
+        },
+        "fix_component_names": {
+          "match": "const :[name] = () => { :[body] }",
+          "rewrite": "const Sw:[Scope]:[Functionality]:[name] = () => { :[body] }",
+          "description": "Fix React component naming with module scope (e.g., SwMFeUiComponentName)"
+        }
+      }
+    },
+    "ast_grep": {
+      "description": "AST-based refactoring rules for ast-grep CLI tool",
+      "rules": [
+        {
+          "id": "fix-variable-naming",
+          "message": "Variable should follow sw<Scope><Functionality><Name> convention",
+          "language": "typescript",
+          "rule": {
+            "pattern": "const $NAME = $VALUE"
+          },
+          "fix": "const sw$SCOPE$FUNCTIONALITY$NAME = $VALUE",
+          "constraints": {
+            "NAME": {
+              "not": {
+                "regex": "^sw[A-Z]"
+              }
+            }
+          }
+        },
+        {
+          "id": "fix-function-naming",
+          "message": "Function should follow sw<Scope><Functionality><Name> convention",
+          "language": "typescript",
+          "rule": {
+            "pattern": "function $NAME($PARAMS) { $BODY }"
+          },
+          "fix": "function sw$SCOPE$FUNCTIONALITY$NAME($PARAMS) { $BODY }",
+          "constraints": {
+            "NAME": {
+              "not": {
+                "regex": "^sw[A-Z]"
+              }
+            }
+          }
+        },
+        {
+          "id": "fix-class-naming",
+          "message": "Class should follow Sw<Scope><Functionality><Name> convention",
+          "language": "typescript",
+          "rule": {
+            "pattern": "class $NAME { $BODY }"
+          },
+          "fix": "class Sw$SCOPE$FUNCTIONALITY$NAME { $BODY }",
+          "constraints": {
+            "NAME": {
+              "not": {
+                "regex": "^Sw[A-Z]"
+              }
+            }
+          }
+        },
+        {
+          "id": "fix-react-component-naming",
+          "message": "React component should follow Sw<Scope><Functionality><Name> convention",
+          "language": "tsx",
+          "rule": {
+            "pattern": "const $NAME = () => { $BODY }"
+          },
+          "fix": "const Sw$SCOPE$FUNCTIONALITY$NAME = () => { $BODY }",
+          "constraints": {
+            "NAME": {
+              "regex": "^[A-Z]",
+              "not": {
+                "regex": "^Sw[A-Z]"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "biome": {
+      "description": "Biome linter configuration for naming conventions",
+      "config": {
+        "linter": {
+          "rules": {
+            "style": {
+              "useNamingConvention": {
+                "level": "error",
+                "options": {
+                  "strictCase": false,
+                  "conventions": [
+                    {
+                      "selector": {
+                        "kind": "variable"
+                      },
+                      "match": "^sw[A-Z][a-zA-Z0-9]*",
+                      "formats": ["camelCase"]
+                    },
+                    {
+                      "selector": {
+                        "kind": "function"
+                      },
+                      "match": "^sw[A-Z][a-zA-Z0-9]*",
+                      "formats": ["camelCase"]
+                    },
+                    {
+                      "selector": {
+                        "kind": "class"
+                      },
+                      "match": "^Sw[A-Z][a-zA-Z0-9]*",
+                      "formats": ["PascalCase"]
+                    },
+                    {
+                      "selector": {
+                        "kind": "interface"
+                      },
+                      "match": "^Sw[A-Z][a-zA-Z0-9]*",
+                      "formats": ["PascalCase"]
+                    },
+                    {
+                      "selector": {
+                        "kind": "typeAlias"
+                      },
+                      "match": "^Sw[A-Z][a-zA-Z0-9]*",
+                      "formats": ["PascalCase"]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "jscodeshift": {
+      "description": "Transform templates for jscodeshift migrations",
+      "transforms": {
+        "fix_naming_conventions": {
+          "description": "Automatically fix naming conventions based on sw-naming-book.json",
+          "template": "const { namingBook } = require('./sw-naming-book.json'); module.exports = function transformer(fileInfo, api) { const j = api.jscodeshift; const root = j(fileInfo.source); /* Transform logic here */ return root.toSource(); };"
+        },
+        "rename_identifiers": {
+          "description": "Rename identifiers to follow naming conventions",
+          "template": "module.exports = function transformer(fileInfo, api) { const j = api.jscodeshift; const root = j(fileInfo.source); root.find(j.Identifier).filter(path => !path.value.name.startsWith('sw')).forEach(path => { /* Rename logic */ }); return root.toSource(); };"
+        }
+      }
+    }
+  }
+}

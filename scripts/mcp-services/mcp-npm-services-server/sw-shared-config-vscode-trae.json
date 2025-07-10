@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.claude.ai/desktop/config.json",
+  "mcpServers": {
+    "sagasweave-npm-services": {
+      "command": "node",
+      "args": [
+        "/Users/lpm/Repo/SagasWeaveCloudProject/SW-core/scripts/mcp-services/mcp-npm-services-server/dist/index.js"
+      ],
+      "env": {
+        "SW_MCP_NPM_SERVICES_PROJECT_ROOT": "/Users/lpm/Repo/SagasWeaveCloudProject/SW-core",
+        "SW_MCP_NPM_SERVICES_MAX_CONCURRENT": "5",
+        "SW_MCP_NPM_SERVICES_TIMEOUT": "60000",
+        "DEBUG": "sw-mcp-npm-services"
+      }
+    }
+  }
+}

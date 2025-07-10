@@ -1,0 +1,201 @@
+{
+  "sprintId": 1,
+  "sprintName": "Core Setup & Dashboard Shell",
+  "status": "Completed",
+  "objective": "To establish the foundational project structure and create the basic, non-functional shell of the SagasWeave Dashboard.",
+  "relatedPRDs": [],
+  "scopeBoundaries": {
+    "inScope": [
+      "Setup monorepo structure as per projectstructuredefinition.md",
+      "Initialize frontend application with Vite, React, TypeScript, and Material-UI",
+      "Initialize backend application with Node.js, Express, and TypeScript",
+      "Create a basic, runnable PWA shell with AppBar and placeholder content",
+      "Configure PWA manifest and basic service worker"
+    ],
+    "outOfScope": [
+      "Dynamic functionality implementation",
+      "Backend business logic beyond server shell",
+      "Advanced frontend features beyond basic shell"
+    ]
+  },
+  "restrictiveInstructions": [
+    "MUST follow ALL naming conventions defined in sw-naming-book.json for files, functions, classes, and variables",
+    "MUST run 'sw_mcp_npm_services_run_naming_check_all' before any commit or task completion",
+    "MUST use 'sw_mcp_npm_services_run_naming_fix_all' to auto-fix naming violations",
+    "MUST achieve 100% test coverage via MCP test server before marking tasks as complete",
+    "MUST validate with Puppeteer tests until all UI components work correctly",
+    "NEVER use inline styling - ALWAYS use CSS files in src/styles/",
+    "MUST use Biome for linting and formatting: 'sw_mcp_npm_services_run_lint_biome_fix'",
+    "MUST start MCP test server daemon before sprint execution: cd scripts/mcp-services/mcp-npm-test-server && npm run start:daemon",
+        "MUST start MCP services server daemon before sprint execution: cd scripts/mcp-services/mcp-npm-services-server && npm run start:daemon",
+    "MUST verify both MCP servers are running before executing any tasks by using 'node dist/daemon.js status' commands in their respective directories",
+    "MUST ensure MCP test server is running before executing any test-related tasks",
+    "MUST stop MCP servers cleanly after sprint completion using 'node dist/daemon.js stop' commands",
+    "MUST adhere to the file structure defined in projectstructuredefinition.md",
+    "MUST follow all rules in code-quality-rules.md"
+  ],
+  "tasks": [
+    {
+      "taskId": "1.1",
+      "taskName": "Setup Monorepo Structure",
+      "description": "Create a monorepo with root package.json configured for workspaces including apps/frontend and apps/backend.",
+      "verification": "Monorepo structure exists and root package.json is correctly configured.",
+      "tests": [
+        "Check folder structure matches projectstructuredefinition.md",
+        "Verify package.json workspaces configuration"
+      ],
+      "namingValidation": ["sw_mcp_npm_services_run_naming_check_all passes without errors"],
+      "qualityChecks": ["sw_mcp_npm_services_run_lint_biome_fix completes successfully"],
+      "status": "Completed"
+    },
+    {
+      "taskId": "1.2",
+      "taskName": "Initialize Frontend Application",
+      "description": "Create frontend app using Vite, React, TypeScript, and Material-UI with a basic theme provider.",
+      "verification": "Frontend app runs without errors and displays basic AppBar and content area.",
+      "tests": [
+        "MCP test server is running: cd scripts/mcp-services/mcp-npm-test-server && node dist/daemon.js status",
+        "MCP services server is running: cd scripts/mcp-services/mcp-npm-services-server && node dist/daemon.js status",
+        "npm run dev starts without errors",
+        "All UI components render correctly",
+        "Navigation between components works",
+        "100% test coverage achieved via MCP test server",
+        "Puppeteer tests validate all UI functionality"
+      ],
+      "namingValidation": [
+        "sw_mcp_npm_services_run_naming_check_all passes without errors",
+        "All files follow sw-naming-book.json conventions"
+      ],
+      "qualityChecks": [
+        "sw_mcp_npm_services_run_lint_biome_fix completes successfully",
+        "All TypeScript compilation succeeds without errors"
+      ],
+      "status": "Completed"
+    },
+    {
+      "taskId": "1.3",
+      "taskName": "Initialize Backend Application",
+      "description": "Create backend app with Node.js, Express, and TypeScript including a health-check endpoint.",
+      "verification": "Backend server runs without errors and health-check endpoint returns 200 OK.",
+      "tests": [
+        "MCP test server is running: cd scripts/mcp-services/mcp-npm-test-server && node dist/daemon.js status",
+        "MCP services server is running: cd scripts/mcp-services/mcp-npm-services-server && node dist/daemon.js status",
+        "npm run dev starts backend without errors",
+        "GET /api/health returns 200 status",
+        "Basic API endpoints respond correctly",
+        "100% test coverage achieved via MCP test server",
+        "Integration tests pass"
+      ],
+      "namingValidation": [
+        "sw_mcp_npm_services_run_naming_check_all passes without errors",
+        "All naming violations auto-fixed with sw_mcp_npm_services_run_naming_fix_all"
+      ],
+      "qualityChecks": [
+        "sw_mcp_npm_services_run_lint_biome_fix completes successfully",
+        "All code follows project structure from projectstructuredefinition.md"
+      ],
+      "status": "Completed"
+    },
+    {
+      "taskId": "1.4",
+      "taskName": "Create PWA Configuration",
+      "description": "Configure PWA manifest and basic service worker for the frontend application.",
+      "verification": "PWA is installable and service worker is registered successfully.",
+      "tests": [
+        "MCP test server is running: cd scripts/mcp-services/mcp-npm-test-server && node dist/daemon.js status",
+        "MCP services server is running: cd scripts/mcp-services/mcp-npm-services-server && node dist/daemon.js status",
+        "PWA manifest is valid and accessible",
+        "Service worker registers without errors",
+        "App is installable in supported browsers",
+        "100% test coverage achieved via MCP test server",
+        "All Puppeteer tests pass"
+      ],
+      "namingValidation": [
+        "sw_mcp_npm_services_run_naming_check_all passes without errors",
+        "All files follow sw-naming-book.json conventions"
+      ],
+      "qualityChecks": [
+        "sw_mcp_npm_services_run_lint_biome_fix completes successfully",
+        "All code follows project structure from projectstructuredefinition.md"
+      ],
+      "status": "Completed"
+    },
+    {
+      "taskId": "1.5",
+      "taskName": "Integration Testing",
+      "description": "Perform end-to-end testing to ensure frontend and backend work together correctly.",
+      "verification": "Full-stack application runs without errors and all integration points work correctly.",
+      "tests": [
+        "MCP test server is running: cd scripts/mcp-services/mcp-npm-test-server && node dist/daemon.js status",
+        "MCP services server is running: cd scripts/mcp-services/mcp-npm-services-server && node dist/daemon.js status",
+        "npm run dev starts full-stack without errors",
+        "Frontend connects to backend successfully",
+        "End-to-end user flows work correctly",
+        "All development scripts work correctly",
+        "100% test coverage achieved via MCP test server",
+        "All linting and formatting rules pass"
+      ],
+      "namingValidation": [
+        "sw_mcp_npm_services_run_naming_check_all passes without errors",
+        "All naming violations auto-fixed with sw_mcp_npm_services_run_naming_fix_all"
+      ],
+      "qualityChecks": [
+        "sw_mcp_npm_services_run_lint_biome_fix completes successfully",
+        "Final validation: sw_mcp_npm_services_run_naming_check_all && cd scripts/mcp-services/mcp-npm-test-server && node dist/daemon.js status && cd ../../.. && sw_mcp_npm_services_run_lint_biome"
+      ],
+      "status": "Completed"
+    }
+  ],
+  "deliverables": [
+    "Monorepo structure with frontend and backend apps",
+    "Frontend PWA shell with basic UI and service worker",
+    "Backend server shell with health-check endpoint"
+  ],
+  "completionDefinition": {
+    "referenceDocuments": [
+      "docs/project/sprints/1/expectations-sprint1.md",
+      "docs/project/sprints/sprints-overview.md"
+    ],
+    "criteria": [
+      "ALL tasks completed in sequential order",
+      "ALL naming conventions validated with: sw_mcp_npm_services_run_naming_check_all",
+      "ALL naming violations auto-fixed with: sw_mcp_npm_services_run_naming_fix_all",
+      "ALL files follow sw-naming-book.json conventions",
+      "ALL code linted and formatted with: sw_mcp_npm_services_run_lint_biome_fix",
+      "ALL AST-grep rules pass: sw_mcp_npm_services_run_refactor_ast_grep",
+      "ALL code follows project structure from projectstructuredefinition.md",
+      "MCP test server started and running: cd scripts/mcp-services/mcp-npm-test-server && npm run start:daemon && node dist/daemon.js status",
+        "MCP services server started and running: cd scripts/mcp-services/mcp-npm-services-server && npm run start:daemon && node dist/daemon.js status",
+      "ALL unit tests pass with 100% coverage via MCP test server",
+      "ALL Puppeteer UI tests pass completely",
+      "ALL TypeScript compilation succeeds without errors",
+      "Frontend and backend apps run without errors",
+      "PWA shell is installable and functional as a basic shell",
+      "Monorepo structure adheres to projectstructuredefinition.md",
+      "MCP test server properly stopped after testing: node dist/daemon.js stop",
+      "MCP services server properly stopped after testing: node dist/daemon.js stop"
+    ],
+    "verification": "Binary pass/fail - sprint is complete ONLY when all criteria are met"
+  },
+  "errorHandling": {
+    "onFailure": {
+      "action": "STOP execution immediately",
+      "reporting": ["Notify team with error details"]
+    }
+  },
+  "executionOrder": "SEQUENTIAL",
+  "sprintCompletionWorkflow": [
+    "Verify all tasks are marked as 'Completed'",
+    "MCP test server final validation: cd scripts/mcp-services/mcp-npm-test-server && npm run start:daemon && node dist/daemon.js status",
+        "MCP services server final validation: cd scripts/mcp-services/mcp-npm-services-server && npm run start:daemon && node dist/daemon.js status",
+        "Final validation: sw_mcp_npm_services_run_naming_check_all && cd scripts/mcp-services/mcp-npm-test-server && node dist/daemon.js status && cd ../../.. && sw_mcp_npm_services_run_lint_biome",
+    "All Puppeteer tests pass for complete user journey",
+    "All deliverables meet acceptance criteria",
+    "Ensure 100% test coverage across all components",
+    "Validate that all Puppeteer tests pass",
+    "Confirm adherence to projectstructuredefinition.md",
+    "MCP test server cleanup: cd scripts/mcp-services/mcp-npm-test-server && node dist/daemon.js stop",
+      "MCP services server cleanup: cd scripts/mcp-services/mcp-npm-services-server && node dist/daemon.js stop",
+    "Generate sprint completion report"
+  ]
+}
